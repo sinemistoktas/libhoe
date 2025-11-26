@@ -3,84 +3,259 @@
 <head>
 <meta charset="UTF-8">
 <title>libhoe 🌿</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- Art Nouveau-ish fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Italiana&display=swap" rel="stylesheet">
 
 <style>
+    :root {
+        --bg-main: #f2e8cf;        /* pearl beige */
+        --bg-accent: #eadbc8;      /* vintage parchment */
+        --bg-card: #f7efe3;        /* soft paper */
+        --accent-rose: #ddb7a0;    /* dusty rose */
+        --accent-gold: #c89f8a;    /* tea-stained gold */
+        --accent-ink: #4a5759;     /* deep sage/ink */
+        --accent-olive: #6c7a6e;   /* olive smoke */
+    }
+
+    * {
+        box-sizing: border-box;
+    }
+
     body {
         margin: 0;
-        font-family: "Poppins", sans-serif;
-        background-color: #dff7e2;
-        color: #2d4638;
+        min-height: 100vh;
+        background:
+            radial-gradient(circle at top left, #f9e3d8 0, transparent 55%),
+            radial-gradient(circle at bottom right, #e0f0e7 0, transparent 55%),
+            var(--bg-main);
+        font-family: "Cormorant Garamond", serif;
+        color: var(--accent-ink);
         text-align: center;
+        padding: 0 12px 40px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
     }
 
     header {
-        padding: 40px 20px;
+        width: 100%;
+        max-width: 1000px;
+        padding: 32px 20px 20px;
+        margin-top: 10px;
         position: relative;
+        border-radius: 0 0 32px 32px;
+        background: linear-gradient(135deg, #f7efe3, #f2e1d3);
+        box-shadow: 0 10px 25px rgba(150, 120, 100, 0.25);
+        border: 1px solid rgba(200, 159, 138, 0.4);
+        overflow: hidden;
     }
 
-    /* Upload Books Button (top right) */
+    /* Decorative Art Nouveau curved corners */
+    header::before,
+    header::after {
+        content: "";
+        position: absolute;
+        width: 160px;
+        height: 160px;
+        border-radius: 60% 40% 60% 40%;
+        border: 1px solid rgba(196, 150, 130, 0.6);
+        opacity: 0.35;
+        pointer-events: none;
+    }
+
+    header::before {
+        top: -60px;
+        left: -40px;
+        border-top: 3px solid rgba(200, 159, 138, 0.9);
+        border-left: 3px solid rgba(200, 159, 138, 0.9);
+    }
+
+    header::after {
+        bottom: -70px;
+        right: -30px;
+        border-bottom: 3px solid rgba(200, 159, 138, 0.9);
+        border-right: 3px solid rgba(200, 159, 138, 0.9);
+    }
+
+    /* Upload Books Button */
     #uploadBtn {
         position: absolute;
-        top: 20px;
-        right: 25px;
-        padding: 10px 18px;
-        background: #baf1c2;
-        color: #1f3528;
-        border-radius: 12px;
+        top: 18px;
+        right: 22px;
+        padding: 8px 18px;
+        background: var(--accent-rose);
+        color: #33231c;
+        border-radius: 999px;
+        font-family: "Cormorant Garamond", serif;
+        font-size: 0.95rem;
         font-weight: 600;
         text-decoration: none;
-        transition: 0.2s;
-        box-shadow: 0 0 8px rgba(120, 180, 130, 0.4);
+        letter-spacing: 0.03em;
+        text-transform: lowercase;
+        box-shadow: 0 4px 10px rgba(150, 90, 70, 0.4);
+        border: 1px solid rgba(130, 80, 60, 0.5);
+        transition: 0.18s ease;
+        z-index: 2;
     }
 
     #uploadBtn:hover {
-        background: #9fe8ad;
-        transform: scale(1.05);
+        background: #e5c1ac;
+        transform: translateY(-1px) scale(1.03);
+        box-shadow: 0 6px 14px rgba(130, 80, 60, 0.55);
     }
 
     h1 {
-        font-size: 3rem;
-        color: #2d4638;
-        margin-bottom: 5px;
+        font-family: "Italiana", serif;
+        font-size: 3.2rem;
+        color: var(--accent-ink);
+        margin: 10px 0 2px;
+        letter-spacing: 0.12em;
+        text-transform: lowercase;
     }
 
-    p {
-        opacity: 0.7;
+    .subtitle {
+        font-size: 1.1rem;
         margin: 0;
+        color: var(--accent-olive);
+    }
+
+    main {
+        width: 100%;
+        max-width: 1000px;
+        margin-top: 26px;
+    }
+
+    .collection-header {
+        margin-bottom: 10px;
+    }
+
+    .collection-title {
+        display: inline-block;
+        padding: 6px 22px;
+        border-radius: 999px;
+        background: rgba(234, 219, 200, 0.9);
+        border: 1px solid rgba(200, 159, 138, 0.7);
+        font-size: 1.25rem;
+        font-weight: 600;
+        color: var(--accent-ink);
+        letter-spacing: 0.08em;
+        text-transform: lowercase;
+        position: relative;
+    }
+
+    /* Decorative flourishes */
+    .collection-title::before,
+    .collection-title::after {
+        content: "";
+        position: absolute;
+        width: 34px;
+        height: 18px;
+        border-radius: 999px;
+        border: 1px solid rgba(200, 159, 138, 0.7);
+        opacity: 0.7;
+    }
+
+    .collection-title::before {
+        left: -30px;
+        top: 4px;
+        border-right: none;
+    }
+
+    .collection-title::after {
+        right: -30px;
+        top: 4px;
+        border-left: none;
+    }
+
+    #explorerCard {
+        background: var(--bg-card);
+        border-radius: 26px;
+        padding: 20px 18px 24px;
+        box-shadow: 0 12px 30px rgba(90, 85, 68, 0.3);
+        border: 1px solid rgba(200, 180, 155, 0.7);
+        position: relative;
+        overflow: hidden;
+    }
+
+    #explorerCard::before {
+        content: "";
+        position: absolute;
+        inset: 12px;
+        border-radius: 22px;
+        border: 1px dashed rgba(201, 178, 156, 0.9);
+        pointer-events: none;
     }
 
     #explorer {
         max-width: 900px;
         margin: 0 auto;
-        background: #ffffffcc;
-        padding: 20px;
-        border-radius: 20px;
-        box-shadow: 0 0 20px rgba(150, 200, 160, 0.4);
+        text-align: left;
+        position: relative;
+        z-index: 1;
     }
 
     .item {
-        padding: 12px;
-        margin: 8px 0;
-        background: #ecfdf1;
-        border-radius: 12px;
+        padding: 10px 14px;
+        margin: 6px 0;
+        background: rgba(243, 232, 219, 0.9);
+        border-radius: 999px;
         cursor: pointer;
-        transition: 0.2s ease;
+        transition: 0.18s ease;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 1.05rem;
+        border: 1px solid rgba(210, 188, 165, 0.7);
     }
 
     .item:hover {
-        background: #c8f5d3;
+        background: #f0dfcf;
+        transform: translateX(3px);
+        box-shadow: 0 5px 14px rgba(150, 120, 95, 0.35);
     }
 
     .folder {
         font-weight: 600;
+        color: var(--accent-ink);
+    }
+
+    .item-icon {
+        width: 22px;
+        text-align: center;
+    }
+
+    .item-label {
+        flex: 1;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .back-item {
+        font-style: italic;
+        color: var(--accent-olive);
     }
 
     iframe {
         width: 100%;
-        height: 600px;
+        height: 500px;
         border: none;
-        margin-top: 20px;
-        border-radius: 14px;
+        margin-top: 18px;
+        border-radius: 18px;
+        box-shadow: 0 10px 22px rgba(70, 70, 70, 0.35);
+        background: #000;
+    }
+
+    @media (max-width: 700px) {
+        h1 {
+            font-size: 2.4rem;
+        }
+
+        iframe {
+            height: 380px;
+        }
     }
 </style>
 
@@ -88,42 +263,38 @@
 <body>
 
 <header>
-    <a id="uploadBtn" href="https://drive.google.com/drive/folders/1kv4S8VJT26mEgxpm-IxfPAh7KaJv6cyt?usp=sharing" target="_blank">
-        ➕ Upload Books
+    <a id="uploadBtn" href="https://drive.google.com/drive/folders/19c7Nidkl7gw9C3oDeGCGXHKRhWeMYkSE" target="_blank">
+        ➕ upload books
     </a>
 
     <h1>libhoe</h1>
-    <p>friendly neighborhood library corner 🍀</p>
+    <p class="subtitle">your friendly neighborhood library corner 🍀</p>
 </header>
 
-<h2 style="
-    display:inline-block;
-    background:#c8f5d3;
-    padding:8px 20px;
-    border-radius:20px;
-    font-weight:600;
-    color:#1f3528;
-">
-    Book Collection 📚
-</h2>
+<main>
+    <div class="collection-header">
+        <h2 class="collection-title">Book Collection</h2>
+    </div>
 
-<div id="explorer">Loading...</div>
+    <section id="explorerCard">
+        <div id="explorer">Loading...</div>
+    </section>
 
-<iframe id="previewFrame" style="display:none;"></iframe>
+    <iframe id="previewFrame" style="display:none;"></iframe>
+</main>
 
 <script>
 // CONFIG
 const API_KEY = "AIzaSyBqlgleWtNUB2cuQ2LnEnJL4yKXyey4khg";
 const ROOT_FOLDER = "19c7Nidkl7gw9C3oDeGCGXHKRhWeMYkSE";
 
-// Google Drive API endpoint
 const API_URL = "https://www.googleapis.com/drive/v3/files";
 
 async function listFiles(folderId) {
     const url = `${API_URL}?q='${folderId}' in parents&fields=files(id,name,mimeType)&key=${API_KEY}`;
     const res = await fetch(url);
     const data = await res.json();
-    return data.files;
+    return data.files || [];
 }
 
 async function loadFolder(folderId) {
@@ -134,28 +305,52 @@ async function loadFolder(folderId) {
 
     explorer.innerHTML = "";
 
-    // Back button if not root
     if (folderId !== ROOT_FOLDER) {
-        const backBtn = document.createElement("div");
-        backBtn.className = "item";
-        backBtn.innerHTML = "⬅ Back";
-        backBtn.onclick = () => loadFolder(ROOT_FOLDER);
-        explorer.appendChild(backBtn);
+        const backDiv = document.createElement("div");
+        backDiv.className = "item back-item";
+        backDiv.innerHTML = `
+            <span class="item-icon">↩</span>
+            <span class="item-label">back to main shelf</span>
+        `;
+        backDiv.onclick = () => loadFolder(ROOT_FOLDER);
+        explorer.appendChild(backDiv);
+    }
+
+    if (files.length === 0) {
+        const emptyDiv = document.createElement("div");
+        emptyDiv.className = "item";
+        emptyDiv.style.fontStyle = "italic";
+        emptyDiv.style.opacity = "0.7";
+        emptyDiv.innerHTML = `
+            <span class="item-icon">☕</span>
+            <span class="item-label">this shelf is empty… for now.</span>
+        `;
+        explorer.appendChild(emptyDiv);
+        return;
     }
 
     files.forEach(file => {
         const div = document.createElement("div");
         div.className = "item";
 
+        const iconSpan = document.createElement("span");
+        iconSpan.className = "item-icon";
+
+        const labelSpan = document.createElement("span");
+        labelSpan.className = "item-label";
+        labelSpan.textContent = file.name;
+
         if (file.mimeType === "application/vnd.google-apps.folder") {
             div.classList.add("folder");
-            div.innerHTML = "📁 " + file.name;
+            iconSpan.textContent = "📚"; 
             div.onclick = () => loadFolder(file.id);
         } else {
-            div.innerHTML = "📄 " + file.name;
+            iconSpan.textContent = "📖"; 
             div.onclick = () => previewFile(file.id);
         }
 
+        div.appendChild(iconSpan);
+        div.appendChild(labelSpan);
         explorer.appendChild(div);
     });
 }
@@ -164,12 +359,10 @@ function previewFile(fileId) {
     const iframe = document.getElementById("previewFrame");
     iframe.style.display = "block";
     iframe.src = `https://drive.google.com/file/d/${fileId}/preview`;
-    iframe.scrollIntoView({ behavior: "smooth" });
+    iframe.scrollIntoView({ behavior: "smooth", block: "start" });
 }
 
-// Load homepage folder
 loadFolder(ROOT_FOLDER);
-
 </script>
 
 </body>
