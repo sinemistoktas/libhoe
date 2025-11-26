@@ -5,7 +5,7 @@
 <title>libhoe 🌿</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<!-- Art Nouveau-ish fonts -->
+<!-- Art Nouveau fonts -->
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Italiana&display=swap" rel="stylesheet">
 
 <style>
@@ -14,14 +14,11 @@
         --forest: #37472f;
         --sage: #879c7d;
         --moss: #9b9c78;
-
         --paper: #f4f1e6;
         --card: #f7f5ee;
     }
 
-    * {
-        box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
     body {
         margin: 0;
@@ -50,6 +47,59 @@
         box-shadow: 0 10px 25px rgba(70, 90, 70, 0.25);
         border: 1px solid rgba(80, 90, 80, 0.2);
         overflow: hidden;
+    }
+
+    /* ✨ vines + floating leaves (NO corner ornaments) */
+    header .vine-left,
+    header .vine-right,
+    header .leaf1,
+    header .leaf2,
+    header .leaf3 {
+        pointer-events: none;
+        position: absolute;
+        opacity: 0.55;
+    }
+
+    /* Vines */
+    header .vine-left,
+    header .vine-right {
+        content: "";
+        width: 240px;
+        height: 90px;
+        border: 2px solid rgba(41, 66, 55, 0.5);
+        border-radius: 999px;
+    }
+
+    header .vine-left {
+        top: 40px;
+        left: -60px;
+        transform: rotate(-18deg);
+        border-right: none;
+    }
+
+    header .vine-right {
+        top: 65px;
+        right: -60px;
+        transform: rotate(18deg);
+        border-left: none;
+    }
+
+    /* Floating leaves 🍃 */
+    header .leaf1,
+    header .leaf2,
+    header .leaf3 {
+        content: "🍃";
+        font-size: 1.4rem;
+        opacity: 0.6;
+    }
+
+    header .leaf1 { top: 12px; left: 20px; transform: rotate(-30deg); }
+    header .leaf2 { top: 75px; right: 40px; transform: rotate(20deg); }
+    header .leaf3 {
+        bottom: 15px;
+        left: 50%;
+        transform: translateX(-50%) rotate(-10deg);
+        opacity: 0.5;
     }
 
     /* Upload Books Button */
@@ -99,11 +149,8 @@
         margin-top: 26px;
     }
 
-    .collection-header {
-        margin-bottom: 10px;
-    }
+    .collection-header { margin-bottom: 10px; }
 
-    /* UPDATED: removed circles */
     .collection-title {
         display: inline-block;
         padding: 6px 26px;
@@ -164,15 +211,9 @@
         box-shadow: 0 5px 14px rgba(70, 90, 70, 0.3);
     }
 
-    .folder {
-        font-weight: 600;
-        color: var(--forest);
-    }
+    .folder { font-weight: 600; color: var(--forest); }
 
-    .item-icon {
-        width: 22px;
-        text-align: center;
-    }
+    .item-icon { width: 22px; text-align: center; }
 
     .item-label {
         flex: 1;
@@ -181,10 +222,7 @@
         text-overflow: ellipsis;
     }
 
-    .back-item {
-        font-style: italic;
-        color: var(--sage);
-    }
+    .back-item { font-style: italic; color: var(--sage); }
 
     iframe {
         width: 100%;
@@ -195,13 +233,21 @@
         box-shadow: 0 10px 22px rgba(60, 80, 60, 0.35);
         background: #000;
     }
+
 </style>
 
 </head>
 <body>
 
 <header>
-    <a id="uploadBtn" href="https://drive.google.com/drive/folders/19c7Nidkl7gw9C3oDeGCGXHKRhWeMYkSE" target="_blank">
+    <!-- ✨ vines + leaves -->
+    <span class="vine-left"></span>
+    <span class="vine-right"></span>
+    <span class="leaf1"></span>
+    <span class="leaf2"></span>
+    <span class="leaf3"></span>
+
+    <a id="uploadBtn" href="https://drive.google.com/drive/folders/1kv4S8VJT26mEgxpm-IxfPAh7KaJv6cyt?usp=sharing" target="_blank">
         ➕ upload books
     </a>
 
@@ -240,7 +286,6 @@ async function loadFolder(folderId) {
     explorer.innerHTML = "Loading...";
 
     const files = await listFiles(folderId);
-
     explorer.innerHTML = "";
 
     if (folderId !== ROOT_FOLDER) {
@@ -280,7 +325,7 @@ async function loadFolder(folderId) {
 
         if (file.mimeType === "application/vnd.google-apps.folder") {
             div.classList.add("folder");
-            iconSpan.textContent = "📚"; 
+            iconSpan.textContent = "📚";
             div.onclick = () => loadFolder(file.id);
         } else {
             iconSpan.textContent = "📖";
