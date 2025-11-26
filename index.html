@@ -1,76 +1,176 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>libhoe</title>
-    <style>
-        body {
-            font-family: "Poppins", sans-serif;
-            background-color: #dff7e2;
-            margin: 0;
-            padding: 0;
-            color: #2f4f3e;
-            text-align: center;
-        }
+<meta charset="UTF-8">
+<title>libhoe 🌿</title>
 
-        header {
-            padding: 40px 20px;
-        }
+<style>
+    body {
+        margin: 0;
+        font-family: "Poppins", sans-serif;
+        background-color: #dff7e2;
+        color: #2d4638;
+        text-align: center;
+    }
 
-        h1 {
-            font-size: 3rem;
-            margin-bottom: 10px;
-            color: #2d4638;
-        }
+    header {
+        padding: 40px 20px;
+        position: relative;
+    }
 
-        p.subtitle {
-            font-size: 1.2rem;
-            opacity: 0.7;
-        }
+    /* Upload Books Button (top right) */
+    #uploadBtn {
+        position: absolute;
+        top: 20px;
+        right: 25px;
+        padding: 10px 18px;
+        background: #baf1c2;
+        color: #1f3528;
+        border-radius: 12px;
+        font-weight: 600;
+        text-decoration: none;
+        transition: 0.2s;
+        box-shadow: 0 0 8px rgba(120, 180, 130, 0.4);
+    }
 
-        .container {
-            max-width: 900px;
-            margin: auto;
-            padding: 20px;
-            background: #ffffffaa;
-            border-radius: 20px;
-            backdrop-filter: blur(3px);
-            box-shadow: 0px 0px 20px #b7dec2;
-        }
+    #uploadBtn:hover {
+        background: #9fe8ad;
+        transform: scale(1.05);
+    }
 
-        iframe {
-            width: 100%;
-            height: 600px;
-            border: none;
-            margin-top: 20px;
-            border-radius: 14px;
-        }
+    h1 {
+        font-size: 3rem;
+        color: #2d4638;
+        margin-bottom: 5px;
+    }
 
-        footer {
-            margin-top: 30px;
-            font-size: 0.9rem;
-            opacity: 0.6;
-        }
-    </style>
+    p {
+        opacity: 0.7;
+        margin: 0;
+    }
+
+    #explorer {
+        max-width: 900px;
+        margin: 0 auto;
+        background: #ffffffcc;
+        padding: 20px;
+        border-radius: 20px;
+        box-shadow: 0 0 20px rgba(150, 200, 160, 0.4);
+    }
+
+    .item {
+        padding: 12px;
+        margin: 8px 0;
+        background: #ecfdf1;
+        border-radius: 12px;
+        cursor: pointer;
+        transition: 0.2s ease;
+    }
+
+    .item:hover {
+        background: #c8f5d3;
+    }
+
+    .folder {
+        font-weight: 600;
+    }
+
+    iframe {
+        width: 100%;
+        height: 600px;
+        border: none;
+        margin-top: 20px;
+        border-radius: 14px;
+    }
+</style>
+
 </head>
 <body>
 
-    <header>
-        <h1>libhoe</h1>
-        <p class="subtitle">friendly neighborhood library corner 🍀</p>
-    </header>
+<header>
+    <a id="uploadBtn" href="https://drive.google.com/drive/folders/19c7Nidkl7gw9C3oDeGCGXHKRhWeMYkSE" target="_blank">
+        ➕ Upload Books
+    </a>
 
-    <div class="container">
-        <h2>Book Collection</h2>
+    <h1>libhoe</h1>
+    <p>friendly neighborhood library corner 🍀</p>
+</header>
 
-        <!-- 👉 Replace FOLDER_ID_HERE with your Google Drive folder ID -->
-        <iframe src="https://drive.google.com/embeddedfolderview?id=19c7Nidkl7gw9C3oDeGCGXHKRhWeMYkSE#list"></iframe>
-    </div>
+<h2 style="
+    display:inline-block;
+    background:#c8f5d3;
+    padding:8px 20px;
+    border-radius:20px;
+    font-weight:600;
+    color:#1f3528;
+">
+    Book Collection 📚
+</h2>
 
-    <footer>
-        made with love 🌱
-    </footer>
+<div id="explorer">Loading...</div>
+
+<iframe id="previewFrame" style="display:none;"></iframe>
+
+<script>
+// CONFIG
+const API_KEY = "AIzaSyBqlgleWtNUB2cuQ2LnEnJL4yKXyey4khg";
+const ROOT_FOLDER = "19c7Nidkl7gw9C3oDeGCGXHKRhWeMYkSE";
+
+// Google Drive API endpoint
+const API_URL = "https://www.googleapis.com/drive/v3/files";
+
+async function listFiles(folderId) {
+    const url = `${API_URL}?q='${folderId}' in parents&fields=files(id,name,mimeType)&key=${API_KEY}`;
+    const res = await fetch(url);
+    const data = await res.json();
+    return data.files;
+}
+
+async function loadFolder(folderId) {
+    const explorer = document.getElementById("explorer");
+    explorer.innerHTML = "Loading...";
+
+    const files = await listFiles(folderId);
+
+    explorer.innerHTML = "";
+
+    // Back button if not root
+    if (folderId !== ROOT_FOLDER) {
+        const backBtn = document.createElement("div");
+        backBtn.className = "item";
+        backBtn.innerHTML = "⬅ Back";
+        backBtn.onclick = () => loadFolder(ROOT_FOLDER);
+        explorer.appendChild(backBtn);
+    }
+
+    files.forEach(file => {
+        const div = document.createElement("div");
+        div.className = "item";
+
+        if (file.mimeType === "application/vnd.google-apps.folder") {
+            div.classList.add("folder");
+            div.innerHTML = "📁 " + file.name;
+            div.onclick = () => loadFolder(file.id);
+        } else {
+            div.innerHTML = "📄 " + file.name;
+            div.onclick = () => previewFile(file.id);
+        }
+
+        explorer.appendChild(div);
+    });
+}
+
+function previewFile(fileId) {
+    const iframe = document.getElementById("previewFrame");
+    iframe.style.display = "block";
+    iframe.src = `https://drive.google.com/file/d/${fileId}/preview`;
+    iframe.scrollIntoView({ behavior: "smooth" });
+}
+
+// Load homepage folder
+loadFolder(ROOT_FOLDER);
+
+</script>
 
 </body>
 </html>
