@@ -10,13 +10,13 @@
 
 <style>
     :root {
-        --bg-main: #f2e8cf;        /* pearl beige */
-        --bg-accent: #eadbc8;      /* vintage parchment */
-        --bg-card: #f7efe3;        /* soft paper */
-        --accent-rose: #ddb7a0;    /* dusty rose */
-        --accent-gold: #c89f8a;    /* tea-stained gold */
-        --accent-ink: #4a5759;     /* deep sage/ink */
-        --accent-olive: #6c7a6e;   /* olive smoke */
+        --deep-green: #294237;
+        --forest: #37472f;
+        --sage: #879c7d;
+        --moss: #9b9c78;
+
+        --paper: #f4f1e6;
+        --card: #f7f5ee;
     }
 
     * {
@@ -27,11 +27,11 @@
         margin: 0;
         min-height: 100vh;
         background:
-            radial-gradient(circle at top left, #f9e3d8 0, transparent 55%),
-            radial-gradient(circle at bottom right, #e0f0e7 0, transparent 55%),
-            var(--bg-main);
+            radial-gradient(circle at top left, #e7eee4 0, transparent 55%),
+            radial-gradient(circle at bottom right, #dfe9e0 0, transparent 55%),
+            var(--paper);
         font-family: "Cormorant Garamond", serif;
-        color: var(--accent-ink);
+        color: var(--deep-green);
         text-align: center;
         padding: 0 12px 40px;
         display: flex;
@@ -46,37 +46,10 @@
         margin-top: 10px;
         position: relative;
         border-radius: 0 0 32px 32px;
-        background: linear-gradient(135deg, #f7efe3, #f2e1d3);
-        box-shadow: 0 10px 25px rgba(150, 120, 100, 0.25);
-        border: 1px solid rgba(200, 159, 138, 0.4);
+        background: linear-gradient(135deg, #f3f3eb, #e9e9df);
+        box-shadow: 0 10px 25px rgba(70, 90, 70, 0.25);
+        border: 1px solid rgba(80, 90, 80, 0.2);
         overflow: hidden;
-    }
-
-    /* Decorative Art Nouveau curved corners */
-    header::before,
-    header::after {
-        content: "";
-        position: absolute;
-        width: 160px;
-        height: 160px;
-        border-radius: 60% 40% 60% 40%;
-        border: 1px solid rgba(196, 150, 130, 0.6);
-        opacity: 0.35;
-        pointer-events: none;
-    }
-
-    header::before {
-        top: -60px;
-        left: -40px;
-        border-top: 3px solid rgba(200, 159, 138, 0.9);
-        border-left: 3px solid rgba(200, 159, 138, 0.9);
-    }
-
-    header::after {
-        bottom: -70px;
-        right: -30px;
-        border-bottom: 3px solid rgba(200, 159, 138, 0.9);
-        border-right: 3px solid rgba(200, 159, 138, 0.9);
     }
 
     /* Upload Books Button */
@@ -85,31 +58,30 @@
         top: 18px;
         right: 22px;
         padding: 8px 18px;
-        background: var(--accent-rose);
-        color: #33231c;
+        background: var(--sage);
+        color: var(--forest);
         border-radius: 999px;
         font-family: "Cormorant Garamond", serif;
         font-size: 0.95rem;
         font-weight: 600;
         text-decoration: none;
         letter-spacing: 0.03em;
-        text-transform: lowercase;
-        box-shadow: 0 4px 10px rgba(150, 90, 70, 0.4);
-        border: 1px solid rgba(130, 80, 60, 0.5);
+        box-shadow: 0 4px 10px rgba(50, 70, 50, 0.3);
+        border: 1px solid rgba(40, 60, 40, 0.3);
         transition: 0.18s ease;
         z-index: 2;
     }
 
     #uploadBtn:hover {
-        background: #e5c1ac;
+        background: var(--moss);
         transform: translateY(-1px) scale(1.03);
-        box-shadow: 0 6px 14px rgba(130, 80, 60, 0.55);
+        box-shadow: 0 6px 14px rgba(30, 50, 30, 0.35);
     }
 
     h1 {
         font-family: "Italiana", serif;
         font-size: 3.2rem;
-        color: var(--accent-ink);
+        color: var(--forest);
         margin: 10px 0 2px;
         letter-spacing: 0.12em;
         text-transform: lowercase;
@@ -118,7 +90,7 @@
     .subtitle {
         font-size: 1.1rem;
         margin: 0;
-        color: var(--accent-olive);
+        color: var(--sage);
     }
 
     main {
@@ -131,50 +103,26 @@
         margin-bottom: 10px;
     }
 
+    /* UPDATED: removed circles */
     .collection-title {
         display: inline-block;
-        padding: 6px 22px;
+        padding: 6px 26px;
         border-radius: 999px;
-        background: rgba(234, 219, 200, 0.9);
-        border: 1px solid rgba(200, 159, 138, 0.7);
+        background: var(--sage);
+        border: 1px solid rgba(40, 60, 40, 0.28);
         font-size: 1.25rem;
         font-weight: 600;
-        color: var(--accent-ink);
+        color: var(--forest);
         letter-spacing: 0.08em;
         text-transform: lowercase;
-        position: relative;
-    }
-
-    /* Decorative flourishes */
-    .collection-title::before,
-    .collection-title::after {
-        content: "";
-        position: absolute;
-        width: 34px;
-        height: 18px;
-        border-radius: 999px;
-        border: 1px solid rgba(200, 159, 138, 0.7);
-        opacity: 0.7;
-    }
-
-    .collection-title::before {
-        left: -30px;
-        top: 4px;
-        border-right: none;
-    }
-
-    .collection-title::after {
-        right: -30px;
-        top: 4px;
-        border-left: none;
     }
 
     #explorerCard {
-        background: var(--bg-card);
+        background: var(--card);
         border-radius: 26px;
         padding: 20px 18px 24px;
-        box-shadow: 0 12px 30px rgba(90, 85, 68, 0.3);
-        border: 1px solid rgba(200, 180, 155, 0.7);
+        box-shadow: 0 12px 30px rgba(90, 100, 90, 0.3);
+        border: 1px solid rgba(120, 130, 120, 0.4);
         position: relative;
         overflow: hidden;
     }
@@ -184,7 +132,7 @@
         position: absolute;
         inset: 12px;
         border-radius: 22px;
-        border: 1px dashed rgba(201, 178, 156, 0.9);
+        border: 1px dashed rgba(100, 120, 100, 0.35);
         pointer-events: none;
     }
 
@@ -199,26 +147,26 @@
     .item {
         padding: 10px 14px;
         margin: 6px 0;
-        background: rgba(243, 232, 219, 0.9);
+        background: #eef2ea;
         border-radius: 999px;
         cursor: pointer;
         transition: 0.18s ease;
         display: flex;
         align-items: center;
-        gap: 8px;
+        gap: 10px;
         font-size: 1.05rem;
-        border: 1px solid rgba(210, 188, 165, 0.7);
+        border: 1px solid rgba(90, 110, 90, 0.4);
     }
 
     .item:hover {
-        background: #f0dfcf;
+        background: #e3e8e0;
         transform: translateX(3px);
-        box-shadow: 0 5px 14px rgba(150, 120, 95, 0.35);
+        box-shadow: 0 5px 14px rgba(70, 90, 70, 0.3);
     }
 
     .folder {
         font-weight: 600;
-        color: var(--accent-ink);
+        color: var(--forest);
     }
 
     .item-icon {
@@ -235,7 +183,7 @@
 
     .back-item {
         font-style: italic;
-        color: var(--accent-olive);
+        color: var(--sage);
     }
 
     iframe {
@@ -244,18 +192,8 @@
         border: none;
         margin-top: 18px;
         border-radius: 18px;
-        box-shadow: 0 10px 22px rgba(70, 70, 70, 0.35);
+        box-shadow: 0 10px 22px rgba(60, 80, 60, 0.35);
         background: #000;
-    }
-
-    @media (max-width: 700px) {
-        h1 {
-            font-size: 2.4rem;
-        }
-
-        iframe {
-            height: 380px;
-        }
     }
 </style>
 
@@ -345,7 +283,7 @@ async function loadFolder(folderId) {
             iconSpan.textContent = "📚"; 
             div.onclick = () => loadFolder(file.id);
         } else {
-            iconSpan.textContent = "📖"; 
+            iconSpan.textContent = "📖";
             div.onclick = () => previewFile(file.id);
         }
 
@@ -359,7 +297,7 @@ function previewFile(fileId) {
     const iframe = document.getElementById("previewFrame");
     iframe.style.display = "block";
     iframe.src = `https://drive.google.com/file/d/${fileId}/preview`;
-    iframe.scrollIntoView({ behavior: "smooth", block: "start" });
+    iframe.scrollIntoView({ behavior: "smooth" });
 }
 
 loadFolder(ROOT_FOLDER);
